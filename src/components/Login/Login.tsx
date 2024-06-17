@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
             Continue with Google
           </button>
         </div>
-        <p className="text-center text-gray-700">Don't have an account? <Link href="/signup" className="text-blue-600 hover:underline">Sign Up</Link></p>
+        <p className="text-center text-gray-700">Do not have an account? <Link href="/signup" className="text-blue-600 hover:underline">Sign Up</Link></p>
       </div>
     </div>
   );
