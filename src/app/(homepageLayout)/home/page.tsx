@@ -17,6 +17,7 @@ const page = () => {
     <>
           <div className="flex flex-col min-h-screen">
             <HeroSection />
+            <InfoPage />
             
           </div>
            
