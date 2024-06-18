@@ -10,7 +10,7 @@ const HeroSection = () => {
           Your Health, Our Responsibility
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-8">
-          Book Your Doctor's Appointment Easily
+          Book Your Doctors Appointment Easily
         </p>
         <Link href="/book-appointment" className="bg-blue-600 text-white py-3 px-6 rounded-full text-lg hover:bg-blue-700 transition duration-300">
           Book Appointment

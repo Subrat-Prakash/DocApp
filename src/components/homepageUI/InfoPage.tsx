@@ -19,7 +19,7 @@ const InfoPage = () => {
           <div>
             <h3 className="text-xl font-semibold">How can I cancel an appointment?</h3>
             <p className="text-gray-700">
-              You can cancel your appointment by going to the 'My Appointments' section and selecting the appointment you wish to cancel.
+              You can cancel your appointment by going to the My Appointments section and selecting the appointment you wish to cancel.
             </p>
           </div>
           <div>
@@ -31,7 +31,7 @@ const InfoPage = () => {
           <div>
             <h3 className="text-xl font-semibold">Can I reschedule an appointment?</h3>
             <p className="text-gray-700">
-              Yes, you can reschedule your appointment by selecting a new date and time in the 'My Appointments' section.
+              Yes, you can reschedule your appointment by selecting a new date and time in the My Appointments section.
             </p>
           </div>
         </div>
