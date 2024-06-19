@@ -25,10 +25,10 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="container mc-auto p-4">
-      
+    <div className="container mc-auto p-4 ">
+    
       <div className="bg-white shadow-md rounded-lg p-6">
-      <h1 className="text-4xl font-bold text-center my-8">Contact Us</h1>
+      <h1 className=" text-4xl font-bold text-center my-8">Contact Us</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>

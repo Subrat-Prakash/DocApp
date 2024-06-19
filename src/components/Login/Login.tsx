@@ -1,6 +1,7 @@
 "use client";
 import Head from 'next/head';
 import Link from 'next/link';
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const handleGoogleSignIn = () => {
@@ -41,24 +42,7 @@ export default function LoginPage() {
             onClick={handleGoogleSignIn}
             className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            <svg className="h-5 w-5 mr-2" viewBox="0 0 48 48">
-              <path
-                d="M44.5 20H24v8.5h11.9C34.6 33.7 29.7 37 24 37c-7.7 0-14-6.3-14-14s6.3-14 14-14c3.3 0 6.4 1.2 8.7 3.2L38.1 7C34.1 3.4 29.2 1 24 1 11.8 1 2 10.8 2 23s9.8 22 22 22c11 0 20.1-7.7 21.9-18h-1.4v-7z"
-                fill="#4285F4"
-              />
-              <path
-                d="M6.3 14.8l6.6 4.8C14.7 15.9 19 13 24 13c3.3 0 6.4 1.2 8.7 3.2L38.1 7C34.1 3.4 29.2 1 24 1 15.3 1 8 6.5 6.3 14.8z"
-                fill="#34A853"
-              />
-              <path
-                d="M24 47c5.5 0 10.6-2.1 14.5-5.6l-6.8-5.3C29.7 37 24 37 24 37c-5.5 0-10.2-3.5-11.8-8.4l-6.8 5.3C8 44 15.5 47 24 47z"
-                fill="#FBBC05"
-              />
-              <path
-                d="M44.5 20H24v8.5h11.9C34.6 33.7 29.7 37 24 37c-7.7 0-14-6.3-14-14s6.3-14 14-14c3.3 0 6.4 1.2 8.7 3.2L38.1 7C34.1 3.4 29.2 1 24 1 11.8 1 2 10.8 2 23s9.8 22 22 22c11 0 20.1-7.7 21.9-18h-1.4v-7z"
-                fill="none"
-              />
-            </svg>
+            <FcGoogle />
             Continue with Google
           </button>
         </div>
