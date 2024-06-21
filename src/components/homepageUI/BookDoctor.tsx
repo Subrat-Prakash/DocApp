@@ -27,7 +27,7 @@ const steps = [
 
 const BookDoctor = () => {
   return (
-    <div className="bg-gray-100 py-12 px-6 md:px-12">
+    <div className="bg-blue-100 py-12 px-6 md:px-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Discover the Online Appointment!</h1>
         <p className="text-lg">A step-by-step guide to build an on-demand appointment for patients</p>

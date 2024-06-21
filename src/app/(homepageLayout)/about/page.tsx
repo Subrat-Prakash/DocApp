@@ -1,8 +1,9 @@
 import React from 'react'
+import InfoPage from '@/components/homepageUI/InfoPage';
 
 const page = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="bg-blue-100 flex flex-col min-h-screen">
      
       <main className="flex-grow container mx-auto mt-4 p-4">
         <section className="text-center mb-8">
@@ -20,7 +21,7 @@ const page = () => {
         </section>
 
         
-
+        
         <section>
           <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
           <p className="text-gray-700">
@@ -28,7 +29,7 @@ const page = () => {
           </p>
         </section>
       </main>
-      
+      <InfoPage />
     </div>
   );
 };
