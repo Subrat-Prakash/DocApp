@@ -2,9 +2,9 @@ import React from 'react'
 
 const InfoPage = () => {
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-4">Doctor Appointment Information</h1>
+    
+      <div className="bg-blue-100 shadow-md p-6">
+        <h1 className="text-3xl font-bold mb-4 flex justify-center">Doctor Appointment Information</h1>
         <p className="text-gray-700 mb-4">
           Welcome to our doctor appointment booking app. Here you can find all the necessary information to book an appointment with a doctor easily and quickly.
         </p>
@@ -36,7 +36,7 @@ const InfoPage = () => {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 

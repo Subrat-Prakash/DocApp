@@ -16,8 +16,9 @@ import Gallery from '@/components/homepageUI/Gallery';
 const page = () => {
   return (
     <>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen bg-white">
             <HeroSection />
+            <BookDoctor />
             <InfoPage />
 
           </div>

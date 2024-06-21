@@ -1,23 +1,35 @@
 import React from 'react'
-
 import Link from 'next/link';
+import Image from 'next/image';
+import DoctorHero from '@/assets/img/DoctorHero.jpg';
 
 const HeroSection = () => {
   return (
-    <div className="bg-blue-50 py-20 min-h-screen">
-      <div className="container mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Your Health, Our Responsibility
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600 mb-8">
-          Book Your Doctors Appointment Easily
-        </p>
-        <Link href="/book-appointment" className="bg-blue-600 text-white py-3 px-6 rounded-full text-lg hover:bg-blue-700 transition duration-300">
-          Book Appointment
-        </Link>
+    <div className="flex flex-col-reverse md:flex-row items-center bg-blue-100 p-8">
+      <div className="w-full md:w-1/2 text-center md:text-left">
+        <h1 className="text-4xl font-bold mb-4">Your Health, Our Responsibility</h1>
+        <h2 className="text-2xl mb-2">Book Your Doctors Appointment Easily</h2>
+        <p className="text-lg mb-4">Find the best doctors nearest you</p>
+        <div className="flex items-center justify-center md:justify-start">
+          <input
+            type="text"
+            placeholder="Search nearest Doctor specialization"
+            className="w-full md:w-2/3 px-4 py-2 border rounded-l-md"
+          />
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-r-md">Search</button>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2 mb-8 md:mb-0">
+        <Image
+          src={DoctorHero} // Add the appropriate path to your image
+          alt="Doctor"
+          width={700}
+          height={700}
+          className="object-cover rounded-lg"
+        />
       </div>
     </div>
   );
-}
+};
 
 export default HeroSection;

@@ -27,8 +27,9 @@ const ContactPage = () => {
   return (
     <div className="container mc-auto p-4 ">
     
-      <div className="bg-white shadow-md rounded-lg p-6">
-      <h1 className=" text-4xl font-bold text-center my-8">Contact Us</h1>
+      <div className='flex justify-center items-center shrink-0 '>
+      <div className="w-2/5 bg-white shadow-md rounded-md p-4">
+      <h1 className=" text-4xl font-semibold text-center my-8">Contact Us</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
@@ -70,6 +71,7 @@ const ContactPage = () => {
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Send Message</button>
           </div>
         </form>
+      </div>
       </div>
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Our Contact Information</h2>
