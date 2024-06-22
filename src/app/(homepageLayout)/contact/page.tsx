@@ -27,7 +27,7 @@ const ContactPage = () => {
   return (
     <div className="container mc-auto p-4 ">
     
-      <div className='flex justify-center items-center'>
+      <div className='flex justify-center'>
       <div className="w-2/5 bg-white shadow-md rounded-md p-4">
       <h1 className=" text-4xl font-semibold text-center my-8">Contact Us</h1>
         <form onSubmit={handleSubmit}>
