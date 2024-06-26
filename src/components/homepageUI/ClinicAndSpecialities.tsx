@@ -37,7 +37,7 @@ const SamplePrevArrow = (props: { className: any; style: any; onClick: any; }) =
       style={{ ...style, display: "block", left: "10px", zIndex: 1 }}
       onClick={onClick}
     >
-      <MdKeyboardArrowLeft className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-500 hidden md:block" size={30} />
+      <MdKeyboardArrowLeft className="absolute right-0 top-1/2 transform -translate-y-1/2 text-black-1000 hidden md:block" size={30} />
     </div>
   );
 }
@@ -77,8 +77,8 @@ const ClinicAndSpecialities = () => {
         <h1 className="text-4xl font-bold mb-4">Clinic and Specialities</h1>
         <p className="text-lg">Find experienced doctors across all specialties</p>
       </div>
-      <div className="row justify-content-center">
-        <div className="col-md-9">
+      <div className="row justify-content-center ">
+        <div className="col-md-9 space-x-4 bg-red-500">
           <Slider {...settings} className="specialities-slider d-flex justify-content-center align-items-center gap-5">
             {specialities.map((speciality, index) => (
               <div key={index} className="speicality-item text-center bg-white shadow-md rounded-lg p-6">
