@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-const Profile = () => {
+const PatientProfile = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     username: "",
@@ -135,4 +135,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default PatientProfile;

@@ -77,9 +77,9 @@ const ClinicAndSpecialities = () => {
         <h1 className="text-4xl font-bold mb-4">Clinic and Specialities</h1>
         <p className="text-lg">Find experienced doctors across all specialties</p>
       </div>
-      <div className="row justify-content-center ">
-        <div className="col-md-9 space-x-4 bg-red-500">
-          <Slider {...settings} className="specialities-slider d-flex justify-content-center align-items-center gap-5">
+      <div className="row justify-content-center  ">
+        <div className="col-md-9 space-x-4 bg-white-500">
+          <Slider {...settings} className="specialities-slider d-flex justify-content-center align-items-center  gap-5">
             {specialities.map((speciality, index) => (
               <div key={index} className="speicality-item text-center bg-white shadow-md rounded-lg p-6">
                 <div className="speicality-img mb-4 relative">
