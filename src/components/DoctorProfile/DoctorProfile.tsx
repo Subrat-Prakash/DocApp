@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -17,7 +18,7 @@ const DoctorProfile = () => {
     // Fetch profile data from the server
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('/api/profile'); // Adjust endpoint as necessary
+        const response = await axios.get('/api/users/profile'); // Adjust endpoint as necessary
         setProfile(response.data);
       } catch (error) {
         console.error('Failed to fetch profile', error);
@@ -38,7 +39,7 @@ const DoctorProfile = () => {
   const handleUpdateProfile = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const response = await axios.put('/api/profile', profile); // Adjust endpoint as necessary
+      const response = await axios.put('/api/users/profile', profile); // Adjust endpoint as necessary
       toast.success('Profile updated successfully');
     } catch (error) {
       console.error('Failed to update profile', error);
