@@ -72,7 +72,7 @@ const HomepageHeader = () => {
   };
 
   return (
-    <header className="bg-blue-600 text-white p-4">
+    <header className=" bg-blue-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-bold">
           <Link href="/">DocApp</Link>

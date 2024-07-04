@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
       default: 'patient',
       required: [true, 'User type is required']
     },
+    age: {
+      type: Number,
+      required: [true, 'Age is required'],
+      min: [0, 'Age must be a positive number']
+    },
     createdAt: {
       type: Date,
       default: Date.now
