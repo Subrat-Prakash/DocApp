@@ -6,7 +6,6 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-
 interface User {
   username: string;
   userType: 'patient' | 'doctor';
@@ -15,7 +14,7 @@ interface User {
 const HomepageHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter(); // Correct usage of router
+  const router = useRouter(); 
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -39,26 +38,6 @@ const HomepageHeader = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const logout = async () => {
-    try {
-      const res = await axios.get('/api/users/logout');
-      if (res.status === 200) {
-        toast.success('Logout successful');
-        router.push('/home');
-      } else {
-        toast.error('Logout failed');
-      }
-    } catch (error: any) {
-      console.error('Error during logout:', error.message);
-      toast.error('Logout failed');
-    }
-  };
-
-  const handleLogoutClick = () => {
-    logout();
-    toggleMenu();
-  };
-
   const renderProfileLink = () => {
     if (user) {
       const profileLink = user.userType === 'doctor' ? '/DoctorProfile' : '/PatientProfile';
@@ -72,7 +51,7 @@ const HomepageHeader = () => {
   };
 
   return (
-    <header className=" bg-blue-600 text-white p-4">
+    <header className="bg-blue-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-bold">
           <Link href="/">DocApp</Link>
@@ -113,13 +92,6 @@ const HomepageHeader = () => {
                 </Link>
               )}
             </li>
-            {user && (
-              <li>
-                <button onClick={handleLogoutClick} className="hover:underline">
-                  Logout
-                </button>
-              </li>
-            )}
           </ul>
         </nav>
         <div className="md:hidden">
@@ -159,12 +131,9 @@ const HomepageHeader = () => {
             <li>
               {user ? (
                 <>
-                  <Link href={`/${user.userType === 'doctor' ? '/DoctorProfile' : '/PatientProfile'}`} className="hover:underline" onClick={toggleMenu}>
+                  <Link href={`/${user.userType === 'doctor' ? 'DoctorProfile' : 'PatientProfile'}`} className="hover:underline" onClick={toggleMenu}>
                     {user.username}
                   </Link>
-                  <button onClick={handleLogoutClick} className="hover:underline">
-                    Logout
-                  </button>
                 </>
               ) : (
                 <Link href="/login" className="hover:underline" onClick={toggleMenu}>

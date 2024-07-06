@@ -18,13 +18,15 @@ const DoctorProfile = () => {
     consultingTime: '',
     fee: ''
   });
+  const [formState, setFormState] = useState({ ...profile });
   const [showUpdateSection, setShowUpdateSection] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('/api/doctors/profile'); // Adjust endpoint as necessary
-        setProfile(response.data);
+        const response = await axios.get('/api/doctors/profile');
+        setProfile(response.data.data);
+        setFormState(response.data.data); // Sync form state with fetched profile data
       } catch (error) {
         console.error('Failed to fetch profile', error);
       }
@@ -33,26 +35,30 @@ const DoctorProfile = () => {
     fetchProfile();
   }, []);
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setProfile({
-      ...profile,
+    setFormState({
+      ...formState,
       [name]: value
     });
   };
 
-  const handleUpdateProfile = async (e:any) => {
+  const handleUpdateProfile = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.put('/api/doctors/profile', profile); // Adjust endpoint as necessary
+      await axios.put('/api/doctors/profile', formState);
       toast.success('Profile updated successfully');
+      // Fetch the updated profile data from the API
+      const response = await axios.get('/api/doctors/profile');
+      setProfile(response.data.data);
+      setShowUpdateSection(false); // Hide the update section after successful update
     } catch (error) {
       console.error('Failed to update profile', error);
       toast.error('Failed to update profile');
     }
   };
 
-  const handleImageChange = async (e:any) => {
+  const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
@@ -63,20 +69,30 @@ const DoctorProfile = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setProfile({ ...profile, image: response.data.imageUrl });
+      setFormState({ ...formState, image: response.data.imageUrl });
     } catch (error) {
       console.error('Failed to upload image', error);
       toast.error('Failed to upload image');
     }
   };
 
-  const handleLogout = () => {
-    // Handle logout logic here
-    router.push('/logout'); // Adjust as necessary
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get('/api/users/logout');
+      if (res.status === 200) {
+        toast.success('Logout successful');
+        router.push('/#');
+      } else {
+        toast.error('Logout failed');
+      }
+    } catch (error: any) {
+      console.error('Error during logout:', error.message);
+      toast.error('Logout failed');
+    }
   };
 
   const handleAppointments = () => {
-    router.push('/appointments'); // Adjust as necessary
+    router.push('/appointments');
   };
 
   const toggleUpdateSection = () => {
@@ -110,160 +126,150 @@ const DoctorProfile = () => {
                 <p className="text-lg font-medium text-gray-900"><strong>Consulting Time:</strong> {profile.consultingTime}</p>
                 <p className="text-lg font-medium text-gray-900"><strong>Fee:</strong> {profile.fee} USD</p>
               </div>
-              <div className="mt-6 flex flex-col lg:flex-row gap-4 w-full">
-                <button
-                  className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  onClick={toggleUpdateSection}
-                >
-                  Profile Settings
-                </button>
-                <button
-                  className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                  onClick={handleLogout}
-                >
-                  Log Out
-                </button>
-                <button
-                  className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  onClick={handleAppointments}
-                >
-                  My Appointments
-                </button>
-              </div>
+            </div>
+            <div className="mt-6 flex justify-center gap-4">
+              <button
+                onClick={toggleUpdateSection}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Update Profile
+              </button>
+              <button
+                onClick={handleAppointments}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                View Appointments
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Logout
+              </button>
             </div>
           </div>
-
           {/* Profile Update Section */}
           {showUpdateSection && (
             <div className="w-full lg:w-1/2 bg-white p-8 rounded-lg shadow-md">
               <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
-              <form className="space-y-6" onSubmit={handleUpdateProfile}>
-                <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.username}
-                    onChange={handleInputChange}
-                    placeholder="Username"
-                  />
+              <form onSubmit={handleUpdateProfile}>
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      value={formState.username}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formState.email}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-700">Blood Group</label>
+                    <input
+                      type="text"
+                      id="bloodGroup"
+                      name="bloodGroup"
+                      value={formState.bloodGroup}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="speciality" className="block text-sm font-medium text-gray-700">Speciality</label>
+                    <input
+                      type="text"
+                      id="speciality"
+                      name="speciality"
+                      value={formState.speciality}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience</label>
+                    <input
+                      type="text"
+                      id="experience"
+                      name="experience"
+                      value={formState.experience}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formState.address}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+                    <input
+                      type="text"
+                      id="gender"
+                      name="gender"
+                      value={formState.gender}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="consultingTime" className="block text-sm font-medium text-gray-700">Consulting Time</label>
+                    <input
+                      type="text"
+                      id="consultingTime"
+                      name="consultingTime"
+                      value={formState.consultingTime}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee (USD)</label>
+                    <input
+                      type="text"
+                      id="fee"
+                      name="fee"
+                      value={formState.fee}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
+                    <input
+                      type="file"
+                      id="image"
+                      name="image"
+                      onChange={handleImageChange}
+                      className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.email}
-                    onChange={handleInputChange}
-                    placeholder="Email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-700">Blood Group</label>
-                  <input
-                    type="text"
-                    id="bloodGroup"
-                    name="bloodGroup"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.bloodGroup}
-                    onChange={handleInputChange}
-                    placeholder="Blood Group"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="speciality" className="block text-sm font-medium text-gray-700">Speciality</label>
-                  <input
-                    type="text"
-                    id="speciality"
-                    name="speciality"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.speciality}
-                    onChange={handleInputChange}
-                    placeholder="Speciality"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
-                  <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    onChange={handleImageChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience (years)</label>
-                  <input
-                    type="number"
-                    id="experience"
-                    name="experience"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.experience}
-                    onChange={handleInputChange}
-                    placeholder="Experience"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.address}
-                    onChange={handleInputChange}
-                    placeholder="Address"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.gender}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="consultingTime" className="block text-sm font-medium text-gray-700">Consulting Time</label>
-                  <input
-                    type="text"
-                    id="consultingTime"
-                    name="consultingTime"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.consultingTime}
-                    onChange={handleInputChange}
-                    placeholder="Consulting Time"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee (USD)</label>
-                  <input
-                    type="number"
-                    id="fee"
-                    name="fee"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    value={profile.fee}
-                    onChange={handleInputChange}
-                    placeholder="Fee"
-                  />
-                </div>
-                <div>
+                <div className="mt-6 flex justify-center">
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                   >
-                    Update Profile
+                    Save Changes
                   </button>
                 </div>
               </form>

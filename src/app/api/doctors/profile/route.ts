@@ -9,7 +9,7 @@ connect();
 export async function GET(request: NextRequest) {
   try {
     const userId = await getDataFromToken(request);
-    const user = await User.findById(userId).select('username email age address gender');
+    const user = await User.findById(userId).select('username email bloodGroup speciality image experience address gender consultingTime fee');
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
