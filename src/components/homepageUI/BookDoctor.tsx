@@ -1,31 +1,37 @@
-import React from 'react'
+"use client"
+import React from 'react';
 import Image from 'next/image';
 import { FaArrowRight } from 'react-icons/fa';
+import { useRouter } from 'next/navigation'; // Import useRouter hook
 import FindDoc from '@/assets/img/FindDoc.png';
 import Book from '@/assets/img/Book.png';
 import View from '@/assets/img/View.png';
-
-
 
 const steps = [
   {
     title: 'FIND A DOCTOR',
     description: 'With more than 1000+ doctors and on mission to provide best care Health Care Service',
-    image: FindDoc, // Add the appropriate path to your image
+    image: FindDoc,
   },
   {
     title: 'VIEW DOCTOR',
     description: 'Share your health concern here and we shall assign you a top doctor across the North East',
-    image: View, // Add the appropriate path to your image
+    image: View,
   },
   {
     title: 'BOOK A VISIT',
     description: 'Book your time slot with doctor from your comfort zone',
-    image: Book, // Add the appropriate path to your image
+    image: Book,
   },
 ];
 
 const BookDoctor = () => {
+  const router = useRouter(); // Initialize useRouter
+
+  const handleFindDoctorClick = () => {
+    router.push('/Doctor'); // Navigate to the Doctors page
+  };
+
   return (
     <div className="bg-blue-100 py-12 px-6 md:px-12">
       <div className="text-center mb-12">
@@ -51,7 +57,10 @@ const BookDoctor = () => {
         ))}
       </div>
       <div className="flex justify-center mt-8">
-        <button className="flex items-center bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+        <button
+          onClick={handleFindDoctorClick} 
+          className="flex items-center bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+        >
           Find Doctor <FaArrowRight className="ml-2" />
         </button>
       </div>
@@ -59,7 +68,4 @@ const BookDoctor = () => {
   );
 };
 
-
-
-
-export default BookDoctor
+export default BookDoctor;
