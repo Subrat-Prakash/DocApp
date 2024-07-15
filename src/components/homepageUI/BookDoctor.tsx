@@ -26,7 +26,7 @@ const steps = [
 ];
 
 const BookDoctor = () => {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const handleFindDoctorClick = () => {
     router.push('/Doctor'); // Navigate to the Doctors page

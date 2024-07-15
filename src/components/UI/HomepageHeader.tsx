@@ -74,7 +74,7 @@ const HomepageHeader = () => {
               </Link>
             </li>
             <li>
-              <Link href="/appointment" className="hover:underline">
+              <Link href="/appointmnt" className="hover:underline">
                 Appointments
               </Link>
             </li>

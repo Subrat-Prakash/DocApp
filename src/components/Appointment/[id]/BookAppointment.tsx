@@ -1,26 +1,36 @@
-"use client"
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
 
-const BookAppointment = () => {
+interface Doctor {
+  _id: string;
+  image: string;
+  name: string;
+  username: string;
+  speciality: string;
+  experience: number;
+  address: string;
+  consultingTime: string;
+  fee: number;
+}
+
+const BookAppointment: React.FC<{ id: string }> = ({ id }) => {
   const router = useRouter();
-  const { id } = router.query;
   const [doctor, setDoctor] = useState<Doctor | null>(null);
-  const [patientName, setPatientName] = useState<string>('');
-  const [appointmentDate, setAppointmentDate] = useState<string>('');
-  const [appointmentTime, setAppointmentTime] = useState<string>('');
+  const [patientName, setPatientName] = useState<string>("");
+  const [appointmentDate, setAppointmentDate] = useState<string>("");
+  const [appointmentTime, setAppointmentTime] = useState<string>("");
 
   useEffect(() => {
-    if (id) {
-      axios.get(`/api/doctors/${id}`)
-        .then(response => {
-          setDoctor(response.data);
-        })
-        .catch(error => {
-          console.error("There was an error fetching the doctor data!", error);
-        });
-    }
+    axios
+      .get(`/api/doctors/${id}`)
+      .then((response) => {
+        setDoctor(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the doctor data!", error);
+      });
   }, [id]);
 
   const handleBooking = () => {
@@ -28,15 +38,16 @@ const BookAppointment = () => {
       doctorId: id,
       patientName,
       appointmentDate,
-      appointmentTime
+      appointmentTime,
     };
 
-    axios.post('/api/appointments', bookingData)
-      .then(response => {
-        alert('Appointment booked successfully!');
-        router.push('/');
+    axios
+      .post("/api/appointments/book", bookingData)
+      .then((response) => {
+        alert("Appointment booked successfully!");
+        router.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("There was an error booking the appointment!", error);
       });
   };
@@ -45,7 +56,9 @@ const BookAppointment = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Book Appointment with {doctor.name}</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        Book Appointment with {doctor.name}
+      </h1>
       <div className="mb-4">
         <label className="block mb-2">Patient Name</label>
         <input
@@ -84,15 +97,3 @@ const BookAppointment = () => {
 };
 
 export default BookAppointment;
-
-interface Doctor {
-    _id: string;
-    image: string;
-    name: string;
-    username: string;
-    speciality: string;
-    experience: number;
-    address: string;
-    consultingTime: string;
-    fee: number;
-}

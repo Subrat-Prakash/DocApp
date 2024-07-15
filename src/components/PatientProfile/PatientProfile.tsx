@@ -1,19 +1,19 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const PatientProfile = () => {
   const router = useRouter();
   const [profile, setProfile] = useState({
-    username: '',
-    email: '',
-    bloodGroup: '',
-    image: '',
-    gender: '',
-    mobileNumber: '',
-    address: ''
+    username: "",
+    email: "",
+    bloodGroup: "",
+    image: "",
+    gender: "",
+    mobileNumber: "",
+    address: "",
   });
   const [formState, setFormState] = useState({ ...profile });
   const [showUpdateSection, setShowUpdateSection] = useState(false);
@@ -21,11 +21,11 @@ const PatientProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('/api/patients/profile');
+        const response = await axios.get("/api/patients/profile");
         setProfile(response.data.data);
         setFormState(response.data.data); // Sync form state with fetched profile data
       } catch (error) {
-        console.error('Failed to fetch profile', error);
+        console.error("Failed to fetch profile", error);
       }
     };
 
@@ -36,60 +36,60 @@ const PatientProfile = () => {
     const { name, value } = e.target;
     setFormState({
       ...formState,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleUpdateProfile = async (e: any) => {
     e.preventDefault();
     try {
-      await axios.put('/api/patients/profile', formState);
-      toast.success('Profile updated successfully');
+      await axios.put("/api/patients/profile", formState);
+      toast.success("Profile updated successfully");
       // Fetch the updated profile data from the API
-      const response = await axios.get('/api/patients/profile');
+      const response = await axios.get("/api/patients/profile");
       setProfile(response.data.data);
       setShowUpdateSection(false); // Hide the update section after successful update
     } catch (error) {
-      console.error('Failed to update profile', error);
-      toast.error('Failed to update profile');
+      console.error("Failed to update profile", error);
+      toast.error("Failed to update profile");
     }
   };
 
   const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append("image", file);
 
     try {
-      const response = await axios.post('/api/upload', formData, {
+      const response = await axios.post("/api/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       setFormState({ ...formState, image: response.data.imageUrl });
     } catch (error) {
-      console.error('Failed to upload image', error);
-      toast.error('Failed to upload image');
+      console.error("Failed to upload image", error);
+      toast.error("Failed to upload image");
     }
   };
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get('/api/users/logout');
+      const res = await axios.get("/api/users/logout");
       if (res.status === 200) {
-        toast.success('Logout successful');
-        router.push('/#');
+        toast.success("Logout successful");
+        router.push("/#");
       } else {
-        toast.error('Logout failed');
+        toast.error("Logout failed");
       }
     } catch (error: any) {
-      console.error('Error during logout:', error.message);
-      toast.error('Logout failed');
+      console.error("Error during logout:", error.message);
+      toast.error("Logout failed");
     }
   };
 
   const handleAppointments = () => {
-    router.push('/appointments');
+    router.push("/appointmnt");
   };
 
   const toggleUpdateSection = () => {
@@ -113,12 +113,24 @@ const PatientProfile = () => {
                 />
               </div>
               <div className="text-center space-y-2">
-                <p className="text-lg font-medium text-gray-900"><strong>Username:</strong> {profile.username}</p>
-                <p className="text-lg font-medium text-gray-900"><strong>Email:</strong> {profile.email}</p>
-                <p className="text-lg font-medium text-gray-900"><strong>Blood Group:</strong> {profile.bloodGroup}</p>
-                <p className="text-lg font-medium text-gray-900"><strong>Gender:</strong> {profile.gender}</p>
-                <p className="text-lg font-medium text-gray-900"><strong>Mobile Number:</strong> {profile.mobileNumber}</p>
-                <p className="text-lg font-medium text-gray-900"><strong>Address:</strong> {profile.address}</p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Username:</strong> {profile.username}
+                </p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Email:</strong> {profile.email}
+                </p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Blood Group:</strong> {profile.bloodGroup}
+                </p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Gender:</strong> {profile.gender}
+                </p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Mobile Number:</strong> {profile.mobileNumber}
+                </p>
+                <p className="text-lg font-medium text-gray-900">
+                  <strong>Address:</strong> {profile.address}
+                </p>
               </div>
             </div>
             <div className="mt-6 flex justify-center gap-4">
@@ -149,7 +161,12 @@ const PatientProfile = () => {
               <form onSubmit={handleUpdateProfile}>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Username
+                    </label>
                     <input
                       type="text"
                       id="username"
@@ -160,7 +177,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email
+                    </label>
                     <input
                       type="email"
                       id="email"
@@ -171,7 +193,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-700">Blood Group</label>
+                    <label
+                      htmlFor="bloodGroup"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Blood Group
+                    </label>
                     <input
                       type="text"
                       id="bloodGroup"
@@ -182,7 +209,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+                    <label
+                      htmlFor="gender"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Gender
+                    </label>
                     <input
                       type="text"
                       id="gender"
@@ -193,7 +225,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="mobileNumber" className="block text-sm font-medium text-gray-700">Mobile Number</label>
+                    <label
+                      htmlFor="mobileNumber"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Mobile Number
+                    </label>
                     <input
                       type="text"
                       id="mobileNumber"
@@ -204,7 +241,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Address
+                    </label>
                     <input
                       type="text"
                       id="address"
@@ -215,7 +257,12 @@ const PatientProfile = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="image" className="block text-sm font-medium text-gray-700">Profile Image</label>
+                    <label
+                      htmlFor="image"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Profile Image
+                    </label>
                     <input
                       type="file"
                       id="image"
